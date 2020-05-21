@@ -1,6 +1,5 @@
 defmodule MyWebsocketApp.Router do
   use Plug.Router
-  require EEx
 
   plug Plug.Static,
     at: "/",
@@ -12,13 +11,7 @@ defmodule MyWebsocketApp.Router do
     json_decoder: Jason
   plug :dispatch
 
-  EEx.function_from_file(:defp, :application_html, "lib/application.html.eex", [])
-
-  get "/" do
-    send_resp(conn, 200, application_html())
-  end
-
   match _ do
-    send_resp(conn, 404, "404")
+    send_resp(conn, 200, "woohoo we made it\n")
   end
 end
