@@ -1,3 +1,4 @@
+# thanks to https://medium.com/@loganbbres/elixir-websocket-chat-example-c72986ab5778 for the boilerplate for this app!
 defmodule MyWebsocketApp do
   use Application
 
