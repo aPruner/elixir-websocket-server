@@ -9,15 +9,19 @@ defmodule MyWebsocketApp.SocketHandler do
 
   def websocket_init(state) do
     IO.inspect(self())
+    # Currently, this function registers duplicate clients as different processes
+    # need to check client IP or something to fix this
     Registry.MyWebsocketApp
     |> Registry.register(state.registry_key, {})
-    
+    IO.puts("woohoo, connected to new client websocket")
     {:ok, state}
   end
 
   def websocket_handle({:text, json}, state) do
     payload = Jason.decode!(json)
     message = payload["data"]["message"]
+    IO.puts("message received from a client, broadcasting:")
+    IO.inspect(message)
     
     Registry.MyWebsocketApp
     |> Registry.dispatch(state.registry_key, fn(entries) -> 
